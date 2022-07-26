@@ -1,46 +1,73 @@
-import java.util.Objects;
+import java.time.LocalDate;
 public class Aula1 {
     public static void main(String[] args) {
-        Curso curso1 = new Curso();
-        curso1.setTitulo("Curso java");
-        curso1.setDescricao("Aulas de JAVA");
+        Curso curso1 = new Curso ();
+        curso1.setTitulo("Curso Java");
+        curso1.setDescricao("Descricao curso Java");
         curso1.setCargaHoraria(8);
-        System.out.println(curso1);
-        Curso curso2 = new Curso("Curso js", "descricao curso js", 4);
-        System.out.println(curso2);
-        Mentoria mentoria1 = new Mentoria("Mentoria de java", "descricao mentoria de java", 2);
-        System.out.println(mentoria1);
+
+        Curso curso2 = new Curso ();
+        curso2.setTitulo("Curso de js");
+        curso2.setDescricao("Descricao do curso de js");
+        curso2.setCargaHoraria(4);
+       
+        Conteudo conteudo = new Curso();
+
+        Mentoria mentoria = new Mentoria();
+        mentoria.setTitulo("Mentoria de Java");
+        mentoria.setDescricao("Descricao da mentoria de java");
+        mentoria.setData(LocalDate.now());
+        
+       // System.out.println(curso1);
+        //System.out.println(curso2);
+        //System.out.println(mentoria);
+
+        Bootcamp bootcamp = new Bootcamp();
+        bootcamp.setNome("Java developer");
+        bootcamp.setDescricao("Descricao Bootcamp java developer");
+        bootcamp.getConteudos().add(curso1);
+        bootcamp.getConteudos().add(curso2);
+        bootcamp.getConteudos().add(mentoria);
+
+        Dev devCamila = new Dev();
+        devCamila.setNome("Camila");
+        devCamila.inscreverBootcamp(bootcamp);
+        devCamila.progredir();
+        devCamila.progredir();
+        System.out.println("Conteudos inscritos: "+ devCamila.getConteudosIncritos());
+        System.out.println("Conteudos concluidos: " + devCamila.getConteudosConcluidos());
+        System.out.println("Xp = " + devCamila.calcularTotalXp());
+        
+        Dev devJoao = new Dev();
+        devJoao.setNome("Joao");
+        devJoao.inscreverBootcamp(bootcamp);
+        devJoao.progredir();
+        devJoao.progredir();
+        devJoao.progredir();
+        System.out.println("Conteudos inscritos: "+devJoao.getConteudosIncritos());
+        System.out.println("Conteudos concluidos: " + devJoao.getConteudosConcluidos());
+        System.out.println("Xp = " + devJoao.calcularTotalXp());
+        
+
 
     }
 }
 
-class Curso {
-    private String titulo;
-    private String descricao;
+class Curso extends Conteudo {
     private int cargaHoraria;
+
+    @Override
+    public double calcularXp() {
+        return XP_PADRAO * cargaHoraria;
+    }
+
     public Curso() {
     }
-    public String getTitulo() {
-        return this.titulo;
-    }
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-    public String getDescricao() {
-        return this.descricao;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+
     public int getCargaHoraria() {
         return this.cargaHoraria;
     }
     public void setCargaHoraria(int cargaHoraria) {
-        this.cargaHoraria = cargaHoraria;
-    }
-    public Curso(String titulo, String descricao, int cargaHoraria) {
-        this.titulo = titulo;
-        this.descricao = descricao;
         this.cargaHoraria = cargaHoraria;
     }
     @Override
@@ -48,75 +75,36 @@ class Curso {
         return "{" +
             " titulo='" + getTitulo() + "'" +
             ", descricao='" + getDescricao() + "'" +
-            ", cargaHoraria='" + getCargaHoraria() + "'" +
+            ", cargaHoraria='" + cargaHoraria + "'" +
             "}";
-    }
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Curso)) {
-            return false;
-        }
-        Curso curso = (Curso) o;
-        return Objects.equals(titulo, curso.titulo) && Objects.equals(descricao, curso.descricao) && cargaHoraria == curso.cargaHoraria;
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hash(titulo, descricao, cargaHoraria);
     }
 }
 
-class Mentoria { 
-    private String titulo;
-    private String descricao;
-    private int cargaHoraria;
+class Mentoria extends Conteudo { 
+    private LocalDate data;
 
-    public String getTitulo() {
-        return this.titulo;
-    }
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-    public String getDescricao() {
-        return this.descricao;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-    public int getCargaHoraria() {
-        return this.cargaHoraria;
-    }
-    public void setCargaHoraria(int cargaHoraria) {
-        this.cargaHoraria = cargaHoraria;
-    }
     public Mentoria() {
     }
-    public Mentoria(String titulo, String descricao, int cargaHoraria) {
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.cargaHoraria = cargaHoraria;
+
+    public LocalDate getData() {
+        return this.data;
     }
+
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+
     @Override
     public String toString() {
         return "{" +
-            " titulo='" + getTitulo() + "'" +
-            ", descricao='" + getDescricao() + "'" +
-            ", cargaHoraria='" + getCargaHoraria() + "'" +
+            "titulo='"+ getTitulo()+"'" +
+            "descricao='"+ getDescricao()+"'" +
+            " data='" + data + "'" +
             "}";
     }
+
     @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Mentoria)) {
-            return false;
-        }
-        Mentoria mentoria = (Mentoria) o;
-        return Objects.equals(titulo, mentoria.titulo) && Objects.equals(descricao, mentoria.descricao) && cargaHoraria == mentoria.cargaHoraria;
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hash(titulo, descricao, cargaHoraria);
+    public double calcularXp() {
+        return XP_PADRAO;
     }
 }
