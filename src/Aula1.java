@@ -6,10 +6,8 @@ public class Aula1 {
         curso1.setDescricao("Aulas de JAVA");
         curso1.setCargaHoraria(8);
         System.out.println(curso1);
-
         Curso curso2 = new Curso("Curso js", "descricao curso js", 4);
         System.out.println(curso2);
-
         Mentoria mentoria1 = new Mentoria("Mentoria de java", "descricao mentoria de java", 2);
         System.out.println(mentoria1);
 
